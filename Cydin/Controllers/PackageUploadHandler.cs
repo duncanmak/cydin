@@ -5,7 +5,6 @@ using System.Web;
 using System.Web.Routing;
 using System.IO;
 using Cydin.Builder;
-using CydinBuildService;
 using Cydin.Models;
 
 namespace Cydin.Controllers
@@ -40,8 +39,25 @@ namespace Cydin.Controllers
 			if (!Directory.Exists (dir))
 				Directory.CreateDirectory (dir);
 			
-			context.Request.InputStream.SaveToFile (path);
+			SaveToFile (context.Request.InputStream, path);
 			context.Response.Write ("OK");
+		}
+
+
+		private static void SaveToFile (Stream inStream, string path)
+		{
+			byte [] buffer = new byte [32768];
+			int n = 0;
+			Stream outStream = null;
+			try {
+				outStream = File.Create (path);
+				while ((n = inStream.Read (buffer, 0, buffer.Length)) > 0)
+					outStream.Write (buffer, 0, n);
+			} finally {
+				inStream.Close ();
+				if (outStream != null)
+					outStream.Close ();
+			}
 		}
 	}
 }

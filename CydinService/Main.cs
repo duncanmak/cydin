@@ -1,6 +1,5 @@
 using System;
 using System.Runtime.InteropServices;
-using CydinBuildService;
 using System.Text;
 
 namespace CydinService
@@ -9,11 +8,11 @@ namespace CydinService
 	{
 		public static void Main (string[] args)
 		{
-			LogService.WriteLine ("Starting Cydin service");
+			Console.WriteLine ("Starting Cydin service");
 			SetProcessName ("cydind");
-			BuildService buildBot = new BuildService ();
-			buildBot.Start (null);
-			LogService.WriteLine ("Running");
+			// BuildService buildBot = new BuildService ();
+			// buildBot.Start (null);
+			Console.WriteLine ("Running");
 		}
 		
 		public static void SetProcessName (string name)
